@@ -2,45 +2,34 @@
 
 ### Project Description
 
-The `monitor-resources` tool allows you to track system resource usage. It provides a simple command-line interface to display real-time information on CPU, memory, disk, and network metrics.
+The `monitor-resources` tool allows you to track system resource usage. It provides a simple command-line interface to display real-time information on CPU, memory, and disk metrics.
 
 ### Installation
 
-To install `monitor-resources`, run the following command:
+The tool is a single script (`main.py`) and is not published as a pip package. Clone this repository, then install its one third-party dependency, psutil (everything else it imports is in the Python standard library):
 
 ```
-pip install monitor-resources
+pip install psutil
 ```
 
 ### Usage Examples
 
-To view real-time system resource usage, run:
+To monitor system resource usage with the default settings (a check every 5 seconds, alerts above 90 percent), run:
 
 ```
-monitor-resources
+python main.py
 ```
 
-To monitor specific metrics, use the following options:
+The only options main.py implements are:
 
-**CPU:**
 ```
-monitor-resources --cpu
-```
-
-**Memory:**
-```
-monitor-resources --memory
+python main.py --interval 10 --threshold 80
 ```
 
-**Disk:**
-```
-monitor-resources --disk
-```
+- `--interval`: Time interval (in seconds) between resource checks. Default is 5 seconds.
+- `--threshold`: Threshold (in percentage) for alerts. Default is 90%.
 
-**Network:**
-```
-monitor-resources --network
-```
+On every check the tool logs CPU, memory, and disk usage, and warns when a value exceeds the threshold. It runs until interrupted (Ctrl+C). Note that importing main.py creates a `monitor_resources.log` file in the working directory.
 
 ### Security Warnings
 
