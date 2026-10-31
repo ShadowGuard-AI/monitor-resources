@@ -28,10 +28,10 @@ The only options main.py implements are:
 python main.py --interval 10 --threshold 80
 ```
 
-- `--interval`: Time interval (in seconds) between resource checks. Default is 5 seconds.
-- `--threshold`: Threshold (in percentage) for alerts. Default is 90%.
+- `--interval`: Time interval (in seconds) between resource checks. Default is 5 seconds. It must be positive; a non positive interval exits with code 1 at startup.
+- `--threshold`: Threshold (in percentage) for alerts. Default is 90 percent. It must be between 0 and 100; a value outside that range exits with code 1 at startup.
 
-On every check the tool logs CPU, memory, and disk usage, and warns when a value exceeds the threshold. It runs until interrupted (Ctrl+C). Note that importing main.py creates a `monitor_resources.log` file in the working directory.
+On every check the tool logs CPU usage, memory usage, and disk usage for every partition returned by `disk_partitions`, with the mountpoint named on each disk line, and warns when a value exceeds the threshold. It runs until interrupted (Ctrl+C). The `monitor_resources.log` file in the working directory is created only when monitoring starts, so a `--help` run creates no log file. The log file rotates at 1 MiB with 3 backup files kept, so the log and its backups are capped at about 4 MiB in total.
 
 ### Security Warnings
 
